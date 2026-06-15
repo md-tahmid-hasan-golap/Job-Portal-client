@@ -69,6 +69,34 @@ const Navbar = () => {
           Jobs
         </Link>
       </li>
+      {user && (
+        <li>
+          <Link
+            href="/postaJob"
+            className={`pb-1 text-sm font-medium transition-all border-b-2 ${
+              isActive("/PostAJob")
+                ? "border-blue-500 text-blue-400"
+                : "border-transparent text-slate-300 hover:text-white"
+            }`}
+          >
+            Post a Job
+          </Link>
+        </li>
+      )}
+      {user && (
+        <li>
+          <Link
+            href="/myjobs"
+            className={`pb-1 text-sm font-medium transition-all border-b-2 ${
+              isActive("/myjobs")
+                ? "border-blue-500 text-blue-400"
+                : "border-transparent text-slate-300 hover:text-white"
+            }`}
+          >
+            My Jobs
+          </Link>
+        </li>
+      )}
       <li>
         <Link
           href="/about"
