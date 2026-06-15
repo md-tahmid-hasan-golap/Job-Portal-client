@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const CallToAction = () => {
   return (
@@ -21,9 +22,12 @@ const CallToAction = () => {
           </div>
 
           <div className="shrink-0 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <button className="w-full sm:w-auto px-6 py-3.5 bg-white text-indigo-950 font-bold text-sm rounded-xl hover:bg-slate-50 shadow-md transition-all flex items-center justify-center gap-1.5">
+            <Link
+              href={"/postaJob"}
+              className="w-full sm:w-auto px-6 py-3.5 bg-white text-indigo-950 font-bold text-sm rounded-xl hover:bg-slate-50 shadow-md transition-all flex items-center justify-center gap-1.5"
+            >
               Post a Job Now <ArrowUpRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
