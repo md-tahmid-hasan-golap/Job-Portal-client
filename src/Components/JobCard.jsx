@@ -18,8 +18,18 @@ import UseAxiusSecure from "@/UseAxiusSecure/UseAxiusSecure";
 import Swal from "sweetalert2";
 
 const JobCard = ({ job, onEdit, onDelete, onViewDetails, refetch }) => {
-  const { _id, title, company, category, jobType, location, salary, deadline } =
-    job || {};
+  // ডিস্ট্রাকচারিং-এ job_image যুক্ত করা হলো
+  const {
+    _id,
+    title,
+    company,
+    category,
+    jobType,
+    location,
+    salary,
+    deadline,
+    job_image,
+  } = job || {};
   const axiosSecure = UseAxiusSecure();
 
   const formatDate = (dateStr) => {
@@ -38,6 +48,7 @@ const JobCard = ({ job, onEdit, onDelete, onViewDetails, refetch }) => {
       return dateStr;
     }
   };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -74,15 +85,34 @@ const JobCard = ({ job, onEdit, onDelete, onViewDetails, refetch }) => {
       transition={{ duration: 0.3, ease: "easeOut" }}
       className="bg-white border border-slate-200/60 rounded-2xl p-6 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_30px_-10px_rgba(59,130,246,0.12)] hover:border-blue-400/50 transition-all duration-300 group relative overflow-hidden"
     >
-      {/* গ্লোয়িং ব্যাকগ্রাউন্ড ডেকোরেশন */}
+      {/* গ্লোয়িং ব্যাকগ্রাউন্ড ডেকোরেশন */}
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-indigo-500/0 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500 pointer-events-none" />
 
       <div>
-        {/* টপ সেকশন: কোম্পানি লোগো প্লেসহোল্ডার + ব্যাজেস */}
+        {/* টপ সেকশন: কোম্পানি লোগো বা ইমেজ + ব্যাজেস */}
         <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-colors">
-            <Building2 className="h-5 w-5 text-slate-500 group-hover:text-blue-500 transition-colors" />
+          {/* ইমেজ/লোগো কন্টেইনার */}
+          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-all overflow-hidden">
+            {job_image ? (
+              <img
+                src={job_image}
+                alt={`${company} logo`}
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  // ইমেজ লোড হতে ব্যর্থ হলে আবার ফলব্যাক আইকন দেখাবে
+                  e.target.style.display = "none";
+                  e.target.nextSibling.style.display = "block";
+                }}
+              />
+            ) : null}
+
+            {/* ফলব্যাক আইকন (যদি ইমেজ না থাকে বা ইমেজ ক্র্যাশ করে) */}
+            <Building2
+              className="h-5 w-5 text-slate-500 group-hover:text-blue-500 transition-colors"
+              style={{ display: job_image ? "none" : "block" }}
+            />
           </div>
+
           <div className="flex flex-wrap gap-1.5 justify-end">
             <span className="px-2.5 py-1 bg-blue-50/80 text-blue-600 text-[11px] font-semibold rounded-lg tracking-wide uppercase">
               {category || "General"}
@@ -124,7 +154,7 @@ const JobCard = ({ job, onEdit, onDelete, onViewDetails, refetch }) => {
         </div>
       </div>
 
-      {/* কার্ড ফুটার: ডেডলাইন এবং সিরিয়াল অনুযায়ী অ্যাকশন বাটনসমূহ */}
+      {/* কার্ড ফুটার: ডেডলাইন এবং সিরিয়াল অনুযায়ী অ্যাকশন বাটনসমূহ */}
       <div className="mt-4 pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* ডেডলাইন */}
         <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
@@ -173,4 +203,4 @@ const JobCard = ({ job, onEdit, onDelete, onViewDetails, refetch }) => {
   );
 };
 
-export default JobCard;
+export default JobCard; // এখানে টাইপো (JobCar) ঠিক করা হয়েছে

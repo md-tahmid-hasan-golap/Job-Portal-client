@@ -14,8 +14,18 @@ import {
 } from "lucide-react";
 
 const AllJobCard = ({ job, onViewDetails }) => {
-  const { _id, title, company, category, jobType, location, salary, deadline } =
-    job || {};
+  // ডিস্ট্রাকচারিং-এ job_image যুক্ত করা হলো
+  const {
+    _id,
+    title,
+    company,
+    category,
+    jobType,
+    location,
+    salary,
+    deadline,
+    job_image,
+  } = job || {};
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "N/A";
@@ -47,11 +57,32 @@ const AllJobCard = ({ job, onViewDetails }) => {
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-indigo-500/0 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500 pointer-events-none" />
 
       <div>
-        {/* টপ সেকশন: কোম্পানি লোগো প্লেসহোল্ডার + ব্যাজেস */}
+        {/* টপ সেকশন: কোম্পানি লোগো/ইমেজ + ব্যাজেস */}
         <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-colors">
-            <Building2 className="h-5 w-5 text-slate-500 group-hover:text-blue-500 transition-colors" />
+          {/* ইমেজ/লোগো কন্টেইনার */}
+          <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-sm group-hover:border-blue-200 transition-all overflow-hidden">
+            {job_image ? (
+              <img
+                src={job_image}
+                alt={`${company || "Company"} logo`}
+                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  // ইমেজ লোড ফেল করলে বা ব্রোকেন হলে ওটা হাইড করে ফলব্যাক আইকন দেখাবে
+                  e.target.style.display = "none";
+                  if (e.target.nextSibling) {
+                    e.target.nextSibling.style.display = "block";
+                  }
+                }}
+              />
+            ) : null}
+
+            {/* ফলব্যাক আইকন */}
+            <Building2
+              className="h-5 w-5 text-slate-500 group-hover:text-blue-500 transition-colors"
+              style={{ display: job_image ? "none" : "block" }}
+            />
           </div>
+
           <div className="flex flex-wrap gap-1.5 justify-end">
             <span className="px-2.5 py-1 bg-blue-50/80 text-blue-600 text-[11px] font-semibold rounded-lg tracking-wide uppercase">
               {category || "General"}
@@ -109,6 +140,7 @@ const AllJobCard = ({ job, onViewDetails }) => {
         {/* সিঙ্গেল জব ডিটেইলস বাটন */}
         <Link
           href={`/all-job-details/${_id}`}
+          onClick={() => onViewDetails && onViewDetails(_id)}
           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-blue-600 text-white rounded-xl text-xs font-semibold shadow-sm hover:shadow-md hover:shadow-blue-500/10 transition-all duration-200 active:scale-[0.98] group/btn"
         >
           Job Details

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link"; // রাউটিং এর জন্য Link ইম্পোর্ট করা হয়েছে
 import { motion } from "framer-motion";
 import {
   Search,
@@ -7,9 +8,10 @@ import {
   Briefcase,
   ArrowUpRight,
   CheckCircle2,
+  Compass, // Explore আইকনের জন্য
 } from "lucide-react";
 
-const PremiumBanner = () => {
+const Banner = () => {
   // Ultra-smooth, slow floating movement for premium feel
   const smoothFloat = (delay = 0, yValue = 6) => ({
     initial: { y: 0 },
@@ -33,8 +35,8 @@ const PremiumBanner = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
         {/* LEFT SIDE: Clean Typography & Compact Search */}
-        <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left">
-          {/* Main Title (Exact match with image_b43e3a.jpg layout) */}
+        <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
+          {/* Main Title */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -99,25 +101,36 @@ const PremiumBanner = () => {
             </button>
           </motion.div>
 
-          {/* Small Trust Indicators */}
+          {/* NEW: Explore Jobs Button & Trust Indicators Container */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="flex items-center gap-4 text-[11px] sm:text-xs font-medium text-slate-400 pt-1"
+            className="flex flex-col sm:flex-row sm:items-center gap-4 pt-1"
           >
-            <span className="flex items-center gap-1">
-              <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" /> Verified
-              Companies
-            </span>
-            <span className="flex items-center gap-1">
-              <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" /> Instant
-              Apply
-            </span>
+            {/* Explore Jobs Button */}
+            <Link href="/jobs" passHref>
+              <button className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-sm active:scale-95 group w-full sm:w-auto">
+                <Compass className="h-4 w-4 text-blue-400 group-hover:rotate-45 transition-transform duration-300" />
+                Explore Jobs
+              </button>
+            </Link>
+
+            {/* Small Trust Indicators */}
+            <div className="flex items-center gap-4 text-[11px] sm:text-xs font-medium text-slate-400">
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" /> Verified
+                Companies
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" /> Instant
+                Apply
+              </span>
+            </div>
           </motion.div>
         </div>
 
-        {/* RIGHT SIDE: Perfectly proportioned compact image frame with premium float */}
+        {/* RIGHT SIDE: Perfectly proportioned compact image frame */}
         <div className="lg:col-span-6 w-full flex justify-center lg:justify-end mt-6 lg:mt-0">
           <motion.div
             variants={smoothFloat(0, 6)}
@@ -125,10 +138,10 @@ const PremiumBanner = () => {
             animate="animate"
             className="relative w-full max-w-[460px] aspect-[1.4/1] px-2"
           >
-            {/* The exact blue accent border frame from image_b43e3a.jpg */}
+            {/* Blue accent border frame */}
             <div className="absolute inset-0 border-[3px] border-[#3b82f6] border-r-0 border-b-0 rounded-tl-[40px] rounded-br-[40px] -translate-x-2.5 -translate-y-2.5 z-0" />
 
-            {/* Main Premium Corporate Image Container with Reduced Height */}
+            {/* Main Premium Corporate Image Container */}
             <div className="w-full h-full bg-slate-100 rounded-tl-[35px] rounded-br-[35px] rounded-tr-xl rounded-bl-xl overflow-hidden shadow-xl relative z-10 border border-white">
               <img
                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop"
@@ -163,7 +176,7 @@ const PremiumBanner = () => {
               </p>
             </motion.div>
 
-            {/* Minimal Dot Pattern from image_b43e3a.jpg */}
+            {/* Minimal Dot Pattern */}
             <div className="absolute top-4 left-6 z-20 text-blue-500/30 pointer-events-none hidden sm:block">
               <svg
                 width="40"
@@ -191,4 +204,4 @@ const PremiumBanner = () => {
   );
 };
 
-export default PremiumBanner;
+export default Banner;

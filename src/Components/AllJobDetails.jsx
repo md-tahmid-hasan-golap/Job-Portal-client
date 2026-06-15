@@ -12,6 +12,7 @@ import {
   User,
   Mail,
   CheckCircle2,
+  Building2, // কোম্পানি লোগো না থাকলে দেখানোর জন্য
 } from "lucide-react";
 
 const AllJobDetails = () => {
@@ -58,17 +59,42 @@ const AllJobDetails = () => {
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         {/* Header Section */}
         <div className="p-6 sm:p-8 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-3">
-                {jobDetails.category || "General"}
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-                {jobDetails.title}
-              </h1>
-              <p className="text-lg font-medium text-indigo-600 mt-1">
-                {jobDetails.company}
-              </p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            {/* Logo and Job Title Row */}
+            <div className="flex items-start sm:items-center gap-4">
+              {/* Company Logo/Photo */}
+              <div className="w-16 h-16 rounded-2xl bg-white border border-gray-200 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
+                {jobDetails.company_logo ? (
+                  <img
+                    src={jobDetails.company_logo}
+                    alt={`${jobDetails.company} logo`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // যদি ইমেজ লোড হতে ফেইল করে তাহলে প্লেসহোল্ডার দেখাবে
+                      e.target.style.display = "none";
+                      e.target.nextSibling.style.display = "flex";
+                    }}
+                  />
+                ) : null}
+                <div
+                  className="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-600"
+                  style={{ display: jobDetails.company_logo ? "none" : "flex" }}
+                >
+                  <Building2 className="w-8 h-8" />
+                </div>
+              </div>
+
+              <div>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-2">
+                  {jobDetails.category || "General"}
+                </span>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+                  {jobDetails.title}
+                </h1>
+                <p className="text-lg font-medium text-indigo-600 mt-0.5">
+                  {jobDetails.company}
+                </p>
+              </div>
             </div>
 
             <div>

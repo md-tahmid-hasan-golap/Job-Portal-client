@@ -17,7 +17,7 @@ const MyJobs = () => {
     },
   });
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       {/* Section Title */}
       <div className="mb-6 text-center md:text-left">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white">

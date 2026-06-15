@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Globe,
   User,
+  Image, // নতুন আইকন ইম্পোর্ট করা হলো
 } from "lucide-react";
 import UseAxiusSecure from "@/UseAxiusSecure/UseAxiusSecure";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -52,7 +53,6 @@ const PostJob = () => {
           timer: 3000,
           timerProgressBar: true,
         });
-        navigate("/myjobs");
 
         // ফর্ম ক্লিয়ার বা রিসেট করা
         reset();
@@ -293,6 +293,31 @@ const PostJob = () => {
                 {...register("website")}
                 className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
               />
+            </div>
+
+            {/* Image URL Field (হুবহু অন্য ফিল্ডগুলোর মতোই) */}
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Image className="h-3.5 w-3.5 text-blue-500" /> Company Logo /
+                Image URL *
+              </label>
+              <input
+                type="url"
+                placeholder="e.g., https://example.com/logo.png"
+                {...register("job_image", {
+                  required: "Image URL is required",
+                })}
+                className={`w-full px-3 py-2.5 bg-slate-50 border rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
+                  errors.job_image
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-slate-200 focus:border-blue-500 focus:ring-blue-100"
+                }`}
+              />
+              {errors.job_image && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.job_image.message}
+                </p>
+              )}
             </div>
           </div>
 
